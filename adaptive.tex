@@ -1,20 +1,19 @@
 \section{Adaptive Sampling}
 \begin{frame}{Part B}
-\Huge \center{Adaptive Sampling Algorithms}
+\Large \center{\color{blue}{Adaptive Sampling Algorithms}}
 \end{frame}
 
 \begin{frame}{Idea behind SGD}
 \begin{align*}
  &\E\big[f(\wv^{t+1})\big] - \E\big[f(\wv^{t})\big] \\
-   &= \frac{\eta_t}{2}(1+\lambda \eta_t)\E\big[\|\gv_{i_t}^t\|^2\big] - \eta_t \langle \chiv_{i_t}^t, \nabla \ell(\wv^{t})\rangle + \lambda \eta_t \langle \wv^{t}, \chiv_{i_t}^t \rangle.
+   &= \frac{\eta_t}{2}(1+\lambda \eta_t){\color{red}{\E\big[\|\gv_{i_t}^t\|^2\big]}} - \eta_t \langle \chiv_{i_t}^t, \nabla \ell(\wv^{t})\rangle + \lambda \eta_t \langle \wv^{t}, \chiv_{i_t}^t \rangle.
 \end{align*}
 
-\begin{block}{Goal}
-$\min \E\big[\|\gv_{i_t}^t\|^2\big]$.
- \end{block}
-\begin{equation}\label{eq:p_optimal}
-    p_i = \frac{\|\chiv_i\|}{\sum_{j=1}^n \|\chiv_i\|}.
-\end{equation}
+\begin{equation*}\label{eq:p_optimal}
+\min \E\big[\|\gv_{i_t}^t\|^2\big]
+   \overset{solution}{\longrightarrow} p_i = \frac{\|\chiv_i\|}{\sum_{j=1}^n \|\chiv_i\|}.
+\end{equation*}
+
 \end{frame}
 
 \begin{frame}{Two Updates}
@@ -49,15 +48,14 @@ $\min \E\big[\|\gv_{i_t}^t\|^2\big]$.
 \end{frame}
 
 \begin{frame}{Idea behind SDCA}
-\begin{definition}
-Define the gap of point $i$ as 
+\begin{definition}{Define the gap of point $i$ as} 
 \[
 \sigma_i^t =  \ell(\xv_i^\intercal\wv^{t})+\ell^*(-\alpha_i^{t})+\alpha_i^{t}\xv_i^\intercal\wv^{t} 
 \]
 where $\wv^t$ here is assumed to be the corresponding primal vector for the current $\alphav^t$, that is $\wv^t(\alphav^t) := \frac{1}{\lambda n}\sum_{i=1}^n \alpha_i \xv_i^t$.
 \end{definition}
 
-The duality gap between the primal objective and dual objective at the $t$-th iteration is defined as
+The \textbf{duality gap} between the primal objective and dual objective at the $t$-th iteration is defined as
 \[
     f(\wv^{t})-D(\alphav^{t}) = \frac{1}{n} \sum_{i=1}^n \sigma_i^t.
 \]

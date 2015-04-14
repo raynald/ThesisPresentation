@@ -12,10 +12,10 @@
         \hline
     \end{tabular}
 \end{table}
-\begin{block}{}
-\textbf{rcv1} is a corpus from Reuters news stories.
-\textbf{astro-ph} is astronomy data.
-\end{block}
+\begin{itemize}
+\item \textbf{rcv1} is a corpus from Reuters news stories.
+\item \textbf{astro-ph} is astronomy data.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Selected Competing Algorithms}
@@ -26,12 +26,12 @@
 		\item AdaSVRG
                 \item AdaSDCA
                 \item AdaSDCAS
-                \item AdaGrad
-                \item Csiba-AdaSDCA+
+                \item AdaGrad (by Duchi)
+                \item AdaSDCA+ (by Csiba)
             \end{enumerate}
 \end{frame}
 
-\begin{frame}{Test error with different values of $\lambda$ on dataset }
+\begin{frame}{Test Error with Different Values of $\lambda$}
 \begin{table}[htbp]
     \centering
     \begin{tabular}{|r|r|r|r|r|r|r|}
@@ -51,7 +51,7 @@
 \end{table}
 \end{frame}
 
-\begin{frame}{Verifying the convergence of duality gap}
+\begin{frame}{Verifying the Convergence of Duality Gap}
 \begin{table}[htbp]
     \centering
     \caption{Average duality gap at different epochs for $\lambda = 0.001$} 
@@ -69,6 +69,15 @@
         \hline
     \end{tabular}
 \end{table}
+\end{frame}
+
+\begin{frame}{Performance Metrics}
+\begin{definition}\label{def:psds}
+The \textbf{primal sub-optimality} of algorithm is defined as $P(\wv(\alphav)) - P(\wv^*)$. 
+\end{definition}
+\begin{definition}
+\textbf{Test error} is the error rate on test dataset.
+\end{definition}
 \end{frame}
 
 \begin{frame}{Performance of Two Updating Algorithms}
@@ -128,15 +137,6 @@
         \hline
     \end{tabular}
 \end{table}
-\end{frame}
-
-\begin{frame}{Performance Metrics}
-\begin{definition}\label{def:psds}
-The \textbf{primal sub-optimality} of algorithm is defined as $P(\wv(\alphav)) - P(\wv^*)$. 
-\end{definition}
-\begin{definition}
-\textbf{Test error} is the error rate on test dataset.
-\end{definition}
 \end{frame}
 
 \begin{frame}{Comparison of Adaptive Algorithms}

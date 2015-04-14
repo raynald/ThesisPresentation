@@ -1,6 +1,6 @@
 \section{Non-Uniform Sampling}
 \begin{frame}{Part A}
-\Huge \center{Non-Uniform Sampling Algorithms}
+\Large \center{\color{blue}{ Non-Uniform Sampling Algorithms}}
 \end{frame}
 
 \begin{frame}{Problem}
@@ -18,7 +18,7 @@ and
 \end{equation}
 Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role of a regularizer. 
 \begin{block}{Empirical Risk Minimisation}
-$\min_{\wv\in\R^n} f(\wv)$
+\center{$\min_{\wv\in\R^n} f(\wv)$}
 \end{block}
 \end{frame}
 
@@ -58,9 +58,10 @@ $\min_{\wv\in\R^n} f(\wv)$
 \end{frame}
 
 \begin{frame}{Key inequality}
+Taking the expectation over the random sampling at each step, we have the following bound:
 \begin{align*}\label{neq:fworigin}
-    & \E[f(\wv^{t})]-f(\wv^*)   \le \\
-    & \frac{\eta_t}{2}\E[\|\gv_{i_t}^t\|^2] +\frac{1-\lambda \eta_t}{2\eta_t} \E[\|\wv^{t}-\wv^*\|^2] - \frac{1}{2\eta_t}  \E[\|\wv^{t+1} - \wv^*\|^2]
+     \E[f(\wv^{t})]-f(\wv^*)   &\le  \frac{\eta_t}{2}\E[\|\gv_{i_t}^t\|^2]  \\
+    &+\frac{1-\lambda \eta_t}{2\eta_t} \E[\|\wv^{t}-\wv^*\|^2] - \frac{1}{2\eta_t}  \E[\|\wv^{t+1} - \wv^*\|^2]
 \end{align*}
 \end{frame}
 
@@ -98,15 +99,16 @@ Assume that $\max_{t}\{\|\chiv_{i_t}^t(\wv^t)\|^2\} \le G$ for all $t$. $\E[\|\c
 \end{corollary}
 \end{frame}
 
-\begin{frame}{Dual of Primal Objective}
-\begin{equation}\label{eq:dual}
+\begin{frame}{Dual Problem}
+\begin{block}{Dual Objective Function}
+\begin{equation*}\label{eq:dual}
 \max_{\alphav\in \R^n} D(\alphav):=\frac1n \sum_{i=1}^n -\ell_i^*(-\alpha_i) - \lambda r^*(\vv(\alphav)).  
-\end{equation}
-
+\end{equation*}
+\end{block}
 The relationship between primal variable $\wv$ and dual variable $\alphav$ is
-\begin{equation}\label{eq:wdualupdate}
+\begin{equation*}\label{eq:wdualupdate}
     \wv(\alphav) := \nabla r^*(\vv(\alphav)), \vv(\alphav):=\frac{1}{\lambda n} \sum_{i=1}^n \alpha_i\xv_i
-\end{equation}
+\end{equation*}
 where $\alphav\in \R^n$.
 \end{frame}
 
