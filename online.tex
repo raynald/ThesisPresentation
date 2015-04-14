@@ -1,0 +1,25 @@
+\begin{frame}{Part C}
+Discussions
+\end{frame}
+
+\begin{frame}{Cost per epoch and properties of algorithms}
+\begin{table}[htbp]
+    \centering
+    \label{table:compcost}
+    \begin{tabular}{|r|r|r|r|r|}
+        \hline
+        \textsc{Algorithm} & cost of an epoch & non-uniform & adaptive \\ 
+        \hline
+        NonUnifSGD & $\nnz$ & \cmark & \xmark  \\
+        NonUnifSDCA & $\nnz$ & \cmark & \xmark \\
+        AdaSGD & $(k+1)\nnz$ & \cmark & \cmark \\
+        AdaSVRG & $nd+k\nnz$  & \cmark & \cmark \\
+        AdaSDCA & $(k+1)\nnz$  & \cmark & \cmark \\
+        AdaSDCAS & $(k+1)\nnz$  & \cmark & \cmark \\
+        AdaGrad & $2nd$ & \xmark & \xmark \\
+        Csiba-AdaSDCA & $n\nnz$  & \cmark & \cmark \\
+        Csiba-AdaSDCA+ & $2\nnz$ & \cmark & \cmark \\
+        \hline
+    \end{tabular}
+\end{table}
+\end{frame}

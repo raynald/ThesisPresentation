@@ -1,0 +1,118 @@
+\section{Introduction}
+
+\begin{frame}{Motivation}
+    \begin{itemize}
+        \item Uniform probabilities are used in classical SGD/SDCA. 
+        \item However, uniform probabilities would suffer from poor convergence rate for dataset with a diversified sparsity.
+        \item Non-uniform sampling
+        \item Adaptive sampling
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Warm-up}
+\begin{block}{Objective function}
+    $f(\wv):= L(\wv)+\lambda r(\wv)$ where 
+    $L(\wv) := \frac1n \sum_{i=1}^n \ell(\langle \xv_i, \wv \rangle, y_i)$
+    and 
+    $r(\wv) = \frac{\|\wv\|^2}{2}$
+\end{block}
+\begin{block}{Partial objective function}
+    $f(\wv, i):= \ell(\langle \wv, \xv_i\rangle, y_i)+\frac {\lambda} {2} \|\wv\|^2$
+\end{block}
+\begin{itemize}
+    \item Samples: $\xv$, Labels: $y$
+    \item Probabilities: $p_i$
+    \item Sub-gradient $\chiv_{i}(\wv^{t}) = \nabla f(\wv, i) = \ell'(y_{i}, \langle \wv^{t}, \xv_{i}\rangle)\xv_{i}+\lambda\wv^{t}$
+    \item Sub-gradient $\gv_i = \frac{\chiv_{i}}{np_i}$, $\E\gv_i = \nabla f(\wv, i)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Non-uniform sampling}
+Non-uniform sampling converges faster than uniform sampling for datasets with large variance by assigning higher probabilities to samples with larger norm.
+\end{frame}
+
+\begin{frame}{Theorem 1}
+Firstly, we derive the $\bigO(\frac{\ln T}{T})$convergence rate for non-uniform sampling.
+
+If we choose the step size as $\eta_t = \frac{1}{\lambda t}$, then after $T$ iterations with starting point $\wv^{0}=\bm{0}$, $\wv^*$ is the optimal value of $\wv$. It holds that
+\[
+    \E f\!\left(\frac1T\sum_{t=1}^T \wv^{t} \right)- f(\wv^*) \le \frac{1}{2\lambda T}\sum_{t=1}^T \frac{\E\|\gv_{i_t}^{t}\|^2}{t} 
+    \overset{ \max_{t}\{\|\gv_{i_t}^t(\wv^t)\|\} \le G}{\le}
+    \]
+    \[
+    \frac{1}{2\lambda T} \sum_{t=1}^T \frac{G^2}{t} \le \frac{G^2\ln T}{2\lambda T} 
+\]
+\end{frame}
+
+\begin{frame}{Theorem 2}
+Secondly, the convergence rate is $\bigO(1/T)$ if we take $\eta_t=\frac{2}{\lambda t+1}$ as step size. For the SGD Algorithm  with starting point $\wv^{0}=\bm{0}$, after T iterations, it holds that the weighted average of the iterates satisfies
+\[
+    \E f(\frac{2}{T(T+1)}\sum_{t=1}^{T}t \wv^{t}) - f(\wv^*) \le \frac{2}{\lambda(T+1)} \max_{t} \E\|\gv_{i_t}^{t}\|^2
+    \le \frac{2G}{\lambda (T+1)}
+\]
+\end{frame}
+
+\begin{frame}{Adaptive sampling}
+Adaptivity means changing the probabilities when executing the algorithm according to the known information, typically useful for online algorithm.
+In the paper, our main algorithms AdaSGD and AdaSDCA change the probabilities after one epoch.
+\end{frame}
+
+\begin{frame}{AdaSGD}
+\begin{block}{Main idea}
+    $\E f(\wv^{t+1}) - \E f(\wv^{t}) \le \frac{\eta_t}{2}(1+\frac{\lambda \eta_t}{2})\E\|\gv_{i_t}^{t}\|^2 - \eta_t\chiv_{i_t}\nabla L(\wv^{t}) - \frac{\lambda}{2} \wv^{t} \eta_t \chiv_{i_t}$
+\end{block}
+By Cauchy-Schwarz inequality, 
+\[ 
+    \E\|\gv_{i_t}^{t}\|^2 = \sum_{i=1}^n \frac{\|\chiv_i\|^2}{n^2p_i} = (\sum_{i=1}^n \frac{\|\chiv_i\|^2}{n^2p_i}) (\sum_{i=1}^n p_i) \ge (\sum_{i=1}^n \frac{\|\chiv_i\|}{n})^2
+    \]
+
+\begin{block}{Change $p_i$}
+    $p_i = \frac{\|\chiv_i\|}{\sum_{j=1}^n \|\chiv_i\|}$, 
+    $p_i = \frac{c_i}{\sum_{j=1}^n c_j}$
+\end{block}
+Where $c_i = \max\{l'(\langle \xv_i, \wv^t\rangle, y_i)\xv_i +\lambda \wv^t\}$.
+\end{frame}
+
+\begin{frame}{AdaSDCA}
+\begin{block}{Duality gap}
+    $f(\wv^{t})-D(\alphav^{t}) = \frac{1}{n} \sum_{i=1}^n(\ell(\xv_i^T\wv^{t})+\ell^*(-\alpha_i^{t})+\alpha_i^{t}\xv_i^T\wv^{t}).$
+\end{block}
+
+\begin{block}{Definition}
+    $p_i = \frac{c_i}{\sum_{j=1}^n c_j}$
+\end{block}
+Where $c_i = \max\{l(\xv_i^T\wv^t)+l^*(-\alpha_i^t)+\alpha_i^t\xv_i^T\wv^t\}$.
+\end{frame}
+
+
+\begin{frame}{Online Adaptive SGD/SDCA}
+Online algorithms modify the probability on the fly. By directly applying
+\begin{itemize}
+    \item SGD: $p_i = \max\{\epsilon, l'(\langle \xv_i, \wv^t\rangle, y_i)\xv_i+\lambda           \wv^t\}$
+    \item SDCA: $p_i = \max\{\epsilon, l(\xv_i^T\wv^t)+l^*(-\alpha_i^t)+                            \alpha_i^t\xv_i^T\wv^t\}$
+\end{itemize}
+where $\epsilon = 10^{-8}$
+\end{frame}
+
+\begin{frame}{Comparison of complexity}
+\begin{table}[htbp!]
+    \centering
+    \caption{One epoch computational cost of different algorithms}
+    \label{table:compcost}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textsc{Algorithm} & cost of an epoch\\ 
+        \hline
+        AdaSGD & $(k+1)n\nnz$ \\
+        AdaSDCA & $(k+1)n\nnz$ \\
+        NonUnifSGD & $n\nnz$ \\
+        NonUnifSDCA & $n\nnz$\\
+        OnlineAdaSGD & $n\nnz$\\
+        OnlineAdaSDCA & $n\nnz$\\
+        AdaGrad & {\color{red}$nd$}\\
+        AdaSDCA+ & $2n\nnz$ \\
+        \hline
+    \end{tabular}
+\end{table}
+$\nnz$ means the number of nonzero elements.
+\end{frame}
