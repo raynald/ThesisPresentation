@@ -1,16 +1,38 @@
+\section{Non-Uniform Sampling}
 \begin{frame}{Part A}
-Non-Uniform Sampling Algorithms
+\Huge \center{Non-Uniform Sampling Algorithms}
 \end{frame}
 
 \begin{frame}{Problem}
-\[
-\min_{x\in\R^n} f(\wv)
-\]
-\begin{block}{Remark}
-$f$ is a $\lambda$-strongly convex function.
+\begin{equation}
+    \label{eq:primalObjective}
+    f(\wv):= \ell(\wv)+\lambda r(\wv)
+\end{equation}
+where 
+\begin{equation}\label{eq:someEquationName}
+    \ell(\wv) := \frac1n \sum_{i=1}^n \ell(\langle \xv_i, \wv \rangle, y_i).
+\end{equation}
+and 
+\begin{equation}
+    r(\wv) := \frac12 \|\wv\|_2^2
+\end{equation}
+Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role of a regularizer. 
+\begin{block}{Empirical Risk Minimisation}
+$\min_{\wv\in\R^n} f(\wv)$
 \end{block}
 \end{frame}
 
+\begin{frame}{Notations}
+\begin{itemize}
+\item $\xv_i$: feature vector of sample $i$
+\item $y_i$: label of sample $i$
+\item $p_i$: probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$
+\item $\chiv_i$: subgradient of sample $i$
+\item $\gv_i$: subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{p_i}$
+\item $\wv$: solution of function
+\item $\eta$: stepsize for updating 
+\end{itemize}
+\end{frame}
 \begin{frame}{NonUnifSGD}
 \begin{algorithm}[H]
     \label{alg:SGD}
@@ -74,6 +96,18 @@ Assume that $\max_{t}\{\|\chiv_{i_t}^t(\wv^t)\|^2\} \le G$ for all $t$. $\E[\|\c
 \le \frac{W(\ln T+1)}{2\lambda Tn^2\epsilon^2}
     \end{align*}
 \end{corollary}
+\end{frame}
+
+\begin{frame}{Dual of Primal Objective}
+\begin{equation}\label{eq:dual}
+\max_{\alphav\in \R^n} D(\alphav):=\frac1n \sum_{i=1}^n -\ell_i^*(-\alpha_i) - \lambda r^*(\vv(\alphav)).  
+\end{equation}
+
+The relationship between primal variable $\wv$ and dual variable $\alphav$ is
+\begin{equation}\label{eq:wdualupdate}
+    \wv(\alphav) := \nabla r^*(\vv(\alphav)), \vv(\alphav):=\frac{1}{\lambda n} \sum_{i=1}^n \alpha_i\xv_i
+\end{equation}
+where $\alphav\in \R^n$.
 \end{frame}
 
 \begin{frame}{NonUnifSDCA}

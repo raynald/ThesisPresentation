@@ -1,2 +1,2 @@
-Advanced-Topics-in-Machine-Learning
+Adaptive Probabilities in Stochastic Optimization Algorithms
 ===================================
