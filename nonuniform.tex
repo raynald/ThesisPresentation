@@ -17,7 +17,7 @@ and
     r(\wv) := \frac12 \|\wv\|_2^2
 \end{equation}
 Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role of a regularizer. 
-\begin{block}{Empirical Risk Minimisation}
+\begin{block}{Empirical Risk Minimization}
 \center{$\min_{\wv\in\R^n} f(\wv)$}
 \end{block}
 \end{frame}
@@ -28,9 +28,9 @@ Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role
 \item $y_i$: label of sample $i$
 \item $p_i$: probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$
 \item $\chiv_i$: subgradient of sample $i$
-\item $\gv_i$: subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{p_i}$
-\item $\wv$: solution of function
-\item $\eta$: stepsize for updating 
+\item $\gv_i$: subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{n p_i}$
+\item $\wv$: solution of objective function
+\item $\eta$: stepsize for updating $\wv$
 \end{itemize}
 \end{frame}
 \begin{frame}{NonUnifSGD}

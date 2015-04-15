@@ -1,3 +1,8 @@
+\section{Discussions and Experiments}
+\begin{frame}{Part C}
+\Large \center{\color{blue}{Discussions and Experiments}}
+\end{frame}
+
 \begin{frame}{Datasets for empirical study}
 \begin{table}[htbp]
     \centering
@@ -18,17 +23,26 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Selected Competing Algorithms}
-            \begin{enumerate}
-                \item NonUnifSGD
-                \item NonUnifSDCA
-                \item AdaSGD 
-		\item AdaSVRG
-                \item AdaSDCA
-                \item AdaSDCAS
-                \item AdaGrad (by Duchi)
-                \item AdaSDCA+ (by Csiba)
-            \end{enumerate}
+\begin{frame}{Cost per epoch and properties of algorithms}
+\begin{table}[htbp]
+    \centering
+    \label{table:compcost}
+    \begin{tabular}{|r|r|r|r|r|}
+        \hline
+        \textsc{Algorithm} & cost of an epoch & non-uniform & adaptive \\ 
+        \hline
+        NonUnifSGD & $\nnz$ & \cmark & \xmark  \\
+        NonUnifSDCA & $\nnz$ & \cmark & \xmark \\
+        AdaSGD & $(k+1)\nnz$ & \cmark & \cmark \\
+        AdaSVRG & $nd+k\nnz$  & \cmark & \cmark \\
+        AdaSDCA & $(k+1)\nnz$  & \cmark & \cmark \\
+        AdaSDCAS & $(k+1)\nnz$  & \cmark & \cmark \\
+        AdaGrad (by Duchi) & $2nd$ & \xmark & \xmark \\
+        AdaSDCA (by Csiba) & $n\nnz$  & \cmark & \cmark \\
+        AdaSDCA+ (by Csiba) & $2\nnz$ & \cmark & \cmark \\
+        \hline
+    \end{tabular}
+\end{table}
 \end{frame}
 
 \begin{frame}{Test Error with Different Values of $\lambda$}
