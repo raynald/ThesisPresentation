@@ -47,6 +47,19 @@
 \end{figure}
 \end{frame}
 
+\begin{frame}{AdaSVRG}
+We add a $\tilde{\wv}$ (which denotes the $\wv$ of last epoch) for a new update equation. Therefore, we get
+
+\begin{equation*}\label{eq:vr_w_update}
+    \wv^{t+1} := \wv^{t}-\eta_t [\gv_{i_t}^t(\wv^{t}) - \gv_{i_t}^t(\tilde{\wv}) - \nabla f(\tilde{\wv})]
+\end{equation*}
+
+The expectation of the update function is still the same as before, because
+\[
+    \E[\gv(\wv) - \gv(\tilde{\wv}) + \nabla f(\tilde{\wv})] = \E[\gv(\wv)] - \E[\gv(\tilde{\wv})] + \nabla f(\tilde{\wv}) = \nabla f(\wv).
+\]
+\end{frame}
+
 \begin{frame}{Idea behind SDCA}
 \begin{definition}{Define the gap of point $i$ as} 
 \[
@@ -64,6 +77,13 @@ The \textbf{duality gap} between the primal objective and dual objective at the 
 \begin{frame}{AdaSDCA}
 \begin{figure}[H]
         \includegraphics[height=0.8\textheight]{images/AdaSDCA.png} 
+    \label{fig:AdaSDCA}
+\end{figure}
+\end{frame}
+
+\begin{frame}{AdaSDCAS}
+\begin{figure}[H]
+        \includegraphics[height=0.8\textheight]{images/AdaSDCAS.png} 
     \label{fig:AdaSDCA}
 \end{figure}
 \end{frame}
