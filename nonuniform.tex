@@ -27,10 +27,10 @@ Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role
 \item $\xv_i$: feature vector of sample $i$
 \item $y_i$: label of sample $i$
 \item $p_i$: probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$
-\item $\chiv_i$: subgradient of sample $i$
-\item $\gv_i$: subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{n p_i}$
 \item $\wv$: solution of objective function
 \item $\eta$: stepsize for updating $\wv$
+\item $\chiv_i$: subgradient of sample $i$
+\item $\gv_i$: weighted subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{n p_i}$
 \end{itemize}
 \end{frame}
 \begin{frame}{NonUnifSGD}
@@ -51,7 +51,7 @@ Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role
         Set stepsize $\eta_t \leftarrow \frac{1}{\lambda t}$; \\
         Set $\chiv_{i_t}^t(\wv^{t}) \leftarrow \ell'(\langle \wv^{t}, \xv_{i_t}\rangle, y_{i_t}) \xv_{i_t}+ \lambda \nabla r(\wv^t)$;\\
         Set $\gv_{i_t}^t \leftarrow \frac{\chiv_{i_t}^t(\wv^{t})}{np_{i_t}}$;\\
-        Set $\wv^{t+1} \leftarrow \wv^{t}-\eta_t\gv_{i_t}^t$;
+        {\color{red} Set $\wv^{t+1} \leftarrow \wv^{t}-\eta_t\gv_{i_t}^t$;}
     }
     \KwOut{$\wv^{T+1}$}
 \end{algorithm}
@@ -89,10 +89,10 @@ Define $G := \max_{i, t}\{ \|\chiv_{i}^t(\wv^{t})\|^2\}$ ($i = 1\dots n$, $t=1\d
 Define $W := \max_{i,t}\{\E[\|\chiv_{i}^t(\wv^{t})\|^2]\}$ ($i = 1\dots n$, $t=1\dots T$).
 \end{definition}
 \begin{corollary}\label{corollary:maxsubgrad}
-Assume that $\max_{t}\{\|\chiv_{i_t}^t(\wv^t)\|^2\} \le G$ for all $t$. $\E[\|\chiv_{i_t}^t(\wv^t)\|^2] \le W$ for all $t$ and $p_i > \epsilon$ for all $i=\{1\dots, n\}$,
+Assume that $\max_{t}\{\|\chiv_{i_t}^t(\wv^t)\|^2\} \le G$ or $\E[\|\chiv_{i_t}^t(\wv^t)\|^2] \le W$ for all $t$ and $p_i > \epsilon$ for all $i=\{1\dots, n\}$,
     \begin{align*}
         \E\big[f\!\left(\frac1T\sum_{t=1}^T \wv^{t} \right)\big]- f(\wv^*) \le \frac{1}{2\lambda T} \sum_{t=1}^T \frac{G}{\epsilon nt}
-\le \frac{G(\ln T+1)}{2\lambda \epsilon nT}\\
+\le \frac{G(\ln T+1)}{2\lambda \epsilon nT} \text{or}\\ 
         \E\big[f\!\left(\frac1T\sum_{t=1}^T \wv^{t} \right)\big]- f(\wv^*)  \le \frac{1}{2\lambda T}\sum_{t=1}^T \frac{W}{n^2\epsilon^2 t}
 \le \frac{W(\ln T+1)}{2\lambda Tn^2\epsilon^2}
     \end{align*}

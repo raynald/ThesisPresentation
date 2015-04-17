@@ -4,14 +4,17 @@
 \end{frame}
 
 \begin{frame}{Idea behind SGD}
-\begin{align*}
- &\E\big[f(\wv^{t+1})\big] - \E\big[f(\wv^{t})\big] \\
-   &= \frac{\eta_t}{2}(1+\lambda \eta_t){\color{red}{\E\big[\|\gv_{i_t}^t\|^2\big]}} - \eta_t \langle \chiv_{i_t}^t, \nabla \ell(\wv^{t})\rangle + \lambda \eta_t \langle \wv^{t}, \chiv_{i_t}^t \rangle.
-\end{align*}
-
+According to the SGD theorem, we can reduce the convergence rate by solving the following optimization problem:
+\[
+    \min \E\big[\|\gv_{i_t}^t\|^2\big].
+\]
+By the Cauchy-Schwarz inequality and the fact that $\sum_{i=1}^n p_i = 1$,
+\[ 
+    \E\big[\|\gv_{i_t}^t\|^2\big] = \sum_{i=1}^n \frac{\|\chiv_i\|^2}{n^2p_i} = (\sum_{i=1}^n \frac{\|\chiv_i\|^2}{n^2p_i}) (\sum_{i=1}^n p_i) \ge (\sum_{i=1}^n \frac{\|\chiv_i\|}{n})^2.
+\]
+The above inequality holds when 
 \begin{equation*}\label{eq:p_optimal}
-\min \E\big[\|\gv_{i_t}^t\|^2\big]
-   \overset{solution}{\longrightarrow} p_i = \frac{\|\chiv_i\|}{\sum_{j=1}^n \|\chiv_i\|}.
+    p_i = \frac{\|\chiv_i\|}{\sum_{j=1}^n \|\chiv_i\|}.
 \end{equation*}
 
 \end{frame}
