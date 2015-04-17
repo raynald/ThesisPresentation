@@ -43,6 +43,7 @@
         \hline
     \end{tabular}
 \end{table}
+\textbf{nnz}: is the number of nonzero elements of the matrix consisting of all the samples in the dataset.
 \end{frame}
 
 \begin{frame}{Test Error with Different Values of $\lambda$}
@@ -55,6 +56,8 @@
         Test Error & 0.05160 & 0.04833 & \textbf{0.04713} & 0.04913 & 0.05693 \\
         \hline
     \end{tabular}
+\end{table}
+\begin{table}[htbp]
     \begin{tabular}{|r|r|r|r|r|r|r|}
         \hline
          \texttt{astro-ph} & 1e-2 & 5e-3 & \textbf{1e-3} & 5e-4 & 1e-4 \\
@@ -87,7 +90,7 @@
 
 \begin{frame}{Performance Metrics}
 \begin{definition}\label{def:psds}
-The \textbf{primal sub-optimality} of algorithm is defined as $P(\wv(\alphav)) - P(\wv^*)$. 
+The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) - f(\wv^*)$. 
 \end{definition}
 \begin{definition}
 \textbf{Test error} is the error rate on test dataset.
@@ -177,6 +180,18 @@ The \textbf{primal sub-optimality} of algorithm is defined as $P(\wv(\alphav)) -
 \end{figure}
 \end{frame}
 
+\begin{frame}{Comparison of Time}
+\begin{figure}[htbp]
+\begin{tabular}{ll}
+    \centering
+        \includegraphics[width=0.5\textwidth]{images/comp_adas_time_rcv1.pdf} &
+        \includegraphics[width=0.5\textwidth]{images/comp_adas_time_astro.pdf}
+\end{tabular}
+        \caption{Comparison of the total running time to reach the same optimality}
+     \label{fig:adatime}
+\end{figure}
+\end{frame}
+
 \begin{frame}{Same Level of Optimality}
 \begin{table}[htbp]
     \centering
@@ -197,18 +212,6 @@ The \textbf{primal sub-optimality} of algorithm is defined as $P(\wv(\alphav)) -
         \hline
     \end{tabular}    
 \end{table}
-\end{frame}
-
-\begin{frame}{Comparison of Time}
-\begin{figure}[htbp]
-\begin{tabular}{ll}
-    \centering
-        \includegraphics[width=0.5\textwidth]{images/comp_adas_time_rcv1.pdf} &
-        \includegraphics[width=0.5\textwidth]{images/comp_adas_time_astro.pdf}
-\end{tabular}
-        \caption{Comparison of the total running time to reach the same optimality}
-     \label{fig:adatime}
-\end{figure}
 \end{frame}
 
 \begin{frame}{Comparison of Vector Operation}
@@ -254,12 +257,7 @@ The \textbf{primal sub-optimality} of algorithm is defined as $P(\wv(\alphav)) -
 	\item We compare the performance of Conservative Update and Aggressive Update on AdaSGD and AdaSDCA. Conservative Update works better on AdaSGD  while Aggressive Update works better on AdaSDCA.
 	\item AdaSDCA (adaptive algorithm with duality gap) performs better than AdaSDCAS (adaptive algorithm with subgradients).
 	\item AdaSDCA has the best performance among all the adaptive algorithms (AdaSDCA, AdaSGD, AdaSVRG, AdaGrad and AdaSDCA+) and AdaSGD is the second best.
-\end{itemize}
-\end{frame}
-\begin{frame}{Summary cont.}
-\begin{itemize}
 	\item AdaSVRG achieves a slightly better performance per epoch than AdaSGD but sacrifices the running time on sparse datasets.
-	\item To reach the same optimality given by $500$ epochs run on NonUnifSGD, AdaSGD takes only around $200$ epochs, whereas NonUnifSDCA takes around $30$ which is three times more than AdaSDCA does.
 \end{itemize}
 \end{frame}
 

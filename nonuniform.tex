@@ -4,6 +4,9 @@
 \end{frame}
 
 \begin{frame}{Problem}
+\begin{block}{Empirical Risk Minimization}
+\center{$\min_{\wv\in\R^n} f(\wv)$}
+\end{block}
 \begin{equation}
     \label{eq:primalObjective}
     f(\wv):= \ell(\wv)+\lambda r(\wv)
@@ -17,9 +20,6 @@ and
     r(\wv) := \frac12 \|\wv\|_2^2
 \end{equation}
 Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role of a regularizer. 
-\begin{block}{Empirical Risk Minimization}
-\center{$\min_{\wv\in\R^n} f(\wv)$}
-\end{block}
 \end{frame}
 
 \begin{frame}{Notations}
@@ -30,7 +30,7 @@ Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role
 \item $\wv$: solution of objective function
 \item $\eta$: stepsize for updating $\wv$
 \item $\chiv_i$: subgradient of sample $i$
-\item $\gv_i$: weighted subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{n p_i}$
+\item $\gv_i$: weighted subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{n p_i}$ and $\E[\gv(\wv)] = \nabla f(\wv)$
 \end{itemize}
 \end{frame}
 \begin{frame}{NonUnifSGD}
@@ -57,13 +57,13 @@ Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role
 \end{algorithm}
 \end{frame}
 
-\begin{frame}{Key inequality}
-Taking the expectation over the random sampling at each step, we have the following bound:
-\begin{align*}\label{neq:fworigin}
-     \E[f(\wv^{t})]-f(\wv^*)   &\le  \frac{\eta_t}{2}\E[\|\gv_{i_t}^t\|^2]  \\
-    &+\frac{1-\lambda \eta_t}{2\eta_t} \E[\|\wv^{t}-\wv^*\|^2] - \frac{1}{2\eta_t}  \E[\|\wv^{t+1} - \wv^*\|^2]
-\end{align*}
-\end{frame}
+%\begin{frame}{Key inequality}
+%Taking the expectation over the random sampling at each step, we have the following bound:
+%\begin{align*}\label{neq:fworigin}
+%     \E[f(\wv^{t})]-f(\wv^*)   &\le  \frac{\eta_t}{2}\E[\|\gv_{i_t}^t\|^2]  \\
+%    &+\frac{1-\lambda \eta_t}{2\eta_t} \E[\|\wv^{t}-\wv^*\|^2] - \frac{1}{2\eta_t}  \E[\|\wv^{t+1} - \wv^*\|^2]
+%\end{align*}
+%\end{frame}
 
 \begin{frame}{Convergence Theorem}
 \begin{theorem}
@@ -76,16 +76,16 @@ Taking the expectation over the random sampling at each step, we have the follow
 \end{theorem}
 \end{frame}
 
-\begin{frame}{Proof Snapshot}
-\begin{figure}[H]
-        \includegraphics[width = 0.8\textwidth]{images/snapshot.png} 
-    \label{fig:two_updates}
-\end{figure}
-\end{frame}
+%\begin{frame}{Proof Snapshot}
+%\begin{figure}[H]
+%        \includegraphics[width = 0.8\textwidth]{images/snapshot.png} 
+%    \label{fig:two_updates}
+%\end{figure}
+%\end{frame}
 
 \begin{frame}{Two corollaries}
 \begin{definition}\label{def:WG}
-Define $G := \max_{i, t}\{ \|\chiv_{i}^t(\wv^{t})\|^2\}$ ($i = 1\dots n$, $t=1\dots T$).
+Define $G := \max_{i, t}\{ \|\chiv_{i}^t(\wv^{t})\|^2\}$ ($i = 1\dots n$, $t=1\dots T$). \\
 Define $W := \max_{i,t}\{\E[\|\chiv_{i}^t(\wv^{t})\|^2]\}$ ($i = 1\dots n$, $t=1\dots T$).
 \end{definition}
 \begin{corollary}\label{corollary:maxsubgrad}
@@ -97,6 +97,18 @@ Assume that $\max_{t}\{\|\chiv_{i_t}^t(\wv^t)\|^2\} \le G$ or $\E[\|\chiv_{i_t}^
 \le \frac{W(\ln T+1)}{2\lambda Tn^2\epsilon^2}
     \end{align*}
 \end{corollary}
+\end{frame}
+
+\begin{frame}{Another Theorem for SGD}
+\begin{theorem}\label{theorem:weightedSGD}
+    Suppose $f$ is a $\lambda$-strongly convex function. If we choose the stepsize $\eta_t=\frac{2}{\lambda (t+1)}$, then after $T$ iterations of NonUnifSGD (Algorithm \ref{alg:SGD}) with starting point $\wv^{1}=\bm{0}$, it holds that the weighted average of the iterates satisfies
+    \[
+        \E\big[f(\frac{2}{T(T+1)}\sum_{t=1}^{T}t \wv^{t})\big] - f(\wv^*) \le 
+        \frac{2}{\lambda(T+1)} \max_{t} \E[\|\gv_{i_t}^t\|^2]
+    \]
+    where $\gv_{i_t}^t=\frac{\chiv_{i_t}^t(\wv^{t})}{np_{i_t}}$,
+    and the expectation is taken with respect to the distribution $\p$.
+\end{theorem}
 \end{frame}
 
 \begin{frame}{Dual Problem}
@@ -127,8 +139,8 @@ where $\alphav\in \R^n$.
     \Forloop{ $t = 1,2, \dots ,T$}{
         Sample $i_t$ from $\{1,\ldots,n\}$ based on $\p$; \\
         Calculate $\Delta \alpha_{i_t}^{t} = \argmax_{\Delta \alpha_{i_t}^t}[-\frac{\lambda n}{2}\|\wv^{t}+\frac{1}{\lambda n}\Delta \alpha_{i_t}^t \xv_{i_t} \|^2-\ell_{i_t}^*(-(\alpha_{i_t}^{t}+\Delta\alpha_{i_{t}}^t))]$; \\ 
-        Set $\alpha_{i_{t}}^{t+1}\leftarrow \alpha_{i_{t}}^{t}+\Delta\alpha_{i_t}^{t}$;\\
-        Set $\wv^{t+1}\leftarrow \wv^{t}+\frac{1}{\lambda n}\Delta\alpha_{i_t}^{t}\xv_{i_t} $;\\
+        {\color{red} Set $\alpha_{i_{t}}^{t+1}\leftarrow \alpha_{i_{t}}^{t}+\Delta\alpha_{i_t}^{t}$};\\
+        {\color{red} Set $\wv^{t+1}\leftarrow \wv^{t}+\frac{1}{\lambda n}\Delta\alpha_{i_t}^{t}\xv_{i_t} $};\\
     }
         \KwOut{$\wv^{T+1}$}
 \end{algorithm}
