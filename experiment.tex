@@ -121,6 +121,30 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
 \end{figure}
 \end{frame}
 
+\begin{frame}{Comparison of Adaptive Algorithms}
+\begin{figure}[htbp]
+\begin{tabular}{ll}
+    \centering
+        \includegraphics[width=0.5\textwidth]{images/comp_adas_obej.pdf} &
+        \includegraphics[width=0.5\textwidth]{images/comp_adas_terror.pdf}
+        \end{tabular}
+    \caption{Comparison of five adaptive algorithms on \texttt{rcv1}} 
+    \label{fig:ada_all1}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Comparison of Adaptive Algorithms cont.}
+\begin{figure}[htbp]
+\begin{tabular}{ll}
+    \centering
+        \includegraphics[width=0.5\textwidth]{images/comp_adas_obej_astro.pdf} &
+        \includegraphics[width=0.5\textwidth]{images/comp_adas_terror_astro.pdf}
+        \end{tabular}
+    \caption{Comparison of three adaptive algorithms on \texttt{astro-ph}} 
+    \label{fig:ada_all2}
+\end{figure}
+\end{frame}
+
 \begin{frame}{Comparison of Average Time}
 \begin{table}[htbp]
     \centering
@@ -154,30 +178,6 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
         \hline
     \end{tabular}
 \end{table}
-\end{frame}
-
-\begin{frame}{Comparison of Adaptive Algorithms}
-\begin{figure}[htbp]
-\begin{tabular}{ll}
-    \centering
-        \includegraphics[width=0.5\textwidth]{images/comp_adas_obej.pdf} &
-        \includegraphics[width=0.5\textwidth]{images/comp_adas_terror.pdf}
-        \end{tabular}
-    \caption{Comparison of five adaptive algorithms on \texttt{rcv1}} 
-    \label{fig:ada_all1}
-\end{figure}
-\end{frame}
-
-\begin{frame}{Comparison of Adaptive Algorithms cont.}
-\begin{figure}[htbp]
-\begin{tabular}{ll}
-    \centering
-        \includegraphics[width=0.5\textwidth]{images/comp_adas_obej_astro.pdf} &
-        \includegraphics[width=0.5\textwidth]{images/comp_adas_terror_astro.pdf}
-        \end{tabular}
-    \caption{Comparison of three adaptive algorithms on \texttt{astro-ph}} 
-    \label{fig:ada_all2}
-\end{figure}
 \end{frame}
 
 \begin{frame}{Comparison of Time}
@@ -253,9 +253,9 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
 
 \begin{frame}{Summary}
 \begin{itemize}
-	\item We chose $\lambda=0.001$ for both \texttt{rcv1} and \texttt{astro-ph}.
-	\item We compare the performance of Conservative Update and Aggressive Update on AdaSGD and AdaSDCA. Conservative Update works better on AdaSGD  while Aggressive Update works better on AdaSDCA.
-	\item AdaSDCA (adaptive algorithm with duality gap) performs better than AdaSDCAS (adaptive algorithm with subgradients).
+	\item $\lambda=0.001$ for both \texttt{rcv1} and \texttt{astro-ph}.
+	\item Conservative Update works better on AdaSGD  while Aggressive Update works better on AdaSDCA.
+	\item AdaSDCA (adaptive algorithm with duality gap) performs better than AdaSDCAS (adaptive algorithm with subgradient).
 	\item AdaSDCA has the best performance among all the adaptive algorithms (AdaSDCA, AdaSGD, AdaSVRG, AdaGrad and AdaSDCA+) and AdaSGD is the second best.
 	\item AdaSVRG achieves a slightly better performance per epoch than AdaSGD but sacrifices the running time on sparse datasets.
 \end{itemize}
