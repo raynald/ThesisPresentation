@@ -1,8 +1,4 @@
-\section{Non-Uniform Sampling}
-\begin{frame}{Part A}
-\Large \center{\color{blue}{ Non-Uniform Sampling Algorithms}}
-\end{frame}
-
+\section{Warm-Up}
 \begin{frame}{Problem}
 \begin{block}{Empirical Risk Minimization}
 \center{$\min_{\wv\in\R^n} f(\wv)$}
@@ -12,27 +8,42 @@
     f(\wv):= \ell(\wv)+\lambda r(\wv)
 \end{equation}
 where 
-\begin{equation}\label{eq:someEquationName}
+\begin{equation*}\label{eq:someEquationName}
     \ell(\wv) := \frac1n \sum_{i=1}^n \ell(\langle \xv_i, \wv \rangle, y_i).
-\end{equation}
+\end{equation*}
 and 
-\begin{equation}
+\begin{equation*}
     r(\wv) := \frac12 \|\wv\|_2^2
-\end{equation}
+\end{equation*}
 Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role of a regularizer. 
 \end{frame}
 
-\begin{frame}{Notations}
+\begin{frame}{Problem cont.}
+\begin{block}{Partial Objective Function}
+$f(\wv, i) = \ell(\langle \xv_i, \wv\rangle, y_i) + \lambda r(\wv).$
+\end{block}
+
 \begin{itemize}
 \item $\xv_i$: feature vector of sample $i$
 \item $y_i$: label of sample $i$
-\item $p_i$: probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$
 \item $\wv$: solution of objective function
 \item $\eta$: stepsize for updating $\wv$
-\item $\chiv_i$: subgradient of sample $i$
-\item $\gv_i$: weighted subgradient of sample $i$ with $\gv_i = \frac{\chiv_i}{n p_i}$ and $\E[\gv(\wv)] = \nabla f(\wv)$
+\item $\chiv_i$: subgradient of $f(\wv, i)$
 \end{itemize}
 \end{frame}
+
+\section{Non-Uniform Sampling}
+\begin{frame}{Part A}
+\Large \center{\color{blue}{ Non-Uniform Sampling Algorithms}}
+\end{frame}
+
+\begin{frame}{Non-Uniform}
+Define $p_i$ as the probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$. We use $\gv_i$ (the weighted subgradient with $\gv_i = \frac{\chiv_i}{n p_i}$).
+\[
+\E[\gv(\wv)] = \sum_{i=1}^n \frac{\chiv_i}{n} = \nabla f(\wv)
+\]
+\end{frame}
+
 \begin{frame}{NonUnifSGD}
 \begin{algorithm}[H]
     \label{alg:SGD}

@@ -41,13 +41,11 @@ The above inequality holds when
     \caption{Conservative Probability Update}
     \SetKwFor{Forloop}{for}{}{end}
     \SetAlgoLined
-    Set $s \leftarrow \sum_{j=1,\dots, n, \1_i=\texttt{0}} c_j$; \\
-    Set $c \leftarrow |S|$ where $S \leftarrow \{j | \1_i=\texttt{1}\}$; \\
-    \Forloop {$j = 1, \dots, n$} {
-	    $p_j>0$ $?$ {$p_j \leftarrow \frac{c_j}{s+c}$} $\colon$ {$p_j \leftarrow \frac{1}{s+c}$; } 
-    } 
+    \Forloop{$j = 1, \dots, n$} {
+	Set $p_j \leftarrow \frac{\tilde{c}_j}{\sum_{k=1}^n \tilde{c}_k}$;
+    }
 \end{algorithm} 
-\Tiny $\1_i$ is a indicator function which returns $1$ if point $i$ is correctly classified during all the $k$ iterations, otherwise returns $0$.
+For all $i\in\{1,\dots,n\}$, $\tilde{c}_i = \max\{1, c_i\}$.
 \end{frame}
 
 \begin{frame}{AdaSVRG}
@@ -77,14 +75,14 @@ The \textbf{duality gap} between the primal objective and dual objective at the 
 \]
 \end{frame}
 
-\begin{frame}{AdaSDCA}
+\begin{frame}{AdaSDCA (Duality Gap)}
 \begin{figure}[H]
         \includegraphics[height=0.8\textheight]{images/AdaSDCA.png} 
     \label{fig:AdaSDCA}
 \end{figure}
 \end{frame}
 
-\begin{frame}{AdaSDCAS}
+\begin{frame}{AdaSDCAS (Subgradient)}
 \begin{figure}[H]
         \includegraphics[height=0.8\textheight]{images/AdaSDCAS.png} 
     \label{fig:AdaSDCA}

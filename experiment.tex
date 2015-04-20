@@ -31,8 +31,8 @@
         \hline
         \textsc{Algorithm} & cost of an epoch & non-uniform & adaptive \\ 
         \hline
-        NonUnifSGD & $\nnz$ & \cmark & \xmark  \\
-        NonUnifSDCA & $\nnz$ & \cmark & \xmark \\
+        NonUnifSGD & \textbf{nnz} & \cmark & \xmark  \\
+        NonUnifSDCA & \textbf{nnz} & \cmark & \xmark \\
         AdaSGD & $(k+1)\nnz$ & \cmark & \cmark \\
         AdaSVRG & $nd+k\nnz$  & \cmark & \cmark \\
         AdaSDCA & $(k+1)\nnz$  & \cmark & \cmark \\
@@ -82,7 +82,7 @@
         10 & 1.7485e-04 & 3.93673e-05 \\
         20 & 2.21547e-05 & 6.24779e-07 \\
         50 & 3.12797e-06 & 6.7474e-10\\
-        100 & 5.47897e-07 & 1.43083e-12 \\
+        100 & \textbf{5.47897e-07} & \textbf{1.43083e-12} \\
         \hline
     \end{tabular}
 \end{table}
@@ -90,11 +90,15 @@
 
 \begin{frame}{Performance Metrics}
 \begin{definition}\label{def:psds}
-The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) - f(\wv^*)$. 
+The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv) - f(\wv^*)$. 
 \end{definition}
 \begin{definition}
 \textbf{Test error} is the error rate on test dataset.
 \end{definition}
+We calculate the value by 
+\begin{equation*}
+\ln(f(\wv)-f(\wv^*) + \epsilon).
+\end{equation*}
 \end{frame}
 
 \begin{frame}{Performance of Two Updating Algorithms}
@@ -158,7 +162,7 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
         \hline
         AdaSDCA & 0.05042 & 0.2064 \\
         \hline
-        NonUnifSGD & 0.04244 & 0.1988 \\
+        NonUnifSGD & \textbf{0.04244} & \textbf{0.1988} \\
         \hline
         NonUnifSDCA  & 0.04716 & 0.2037 \\
 	\hline
@@ -172,7 +176,7 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
         \hline
         AdaSDCA & 0.07050 & 0.1343 \\
         \hline
-        NonUnifSGD & 0.06284 & 0.1259 \\
+        NonUnifSGD & \textbf{0.06284} & \textbf{0.1259} \\
         \hline
         NonUnifSDCA  & 0.07054 & 0.1339 \\
         \hline
@@ -201,14 +205,14 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
         \hline 
         rcv1 & AdaSDCA & NonUnifSDCA & AdaSGD & NonUnifSGD \\
         \hline
-        \#epochs & 9 & 35 & 210 & 500 \\         
+        \#epochs & \textbf{9} & 35 & 210 & 500 \\         
         \hline
     \end{tabular}
     \begin{tabular}{|r|r|r|r|r|}
         \hline 
         astro-ph & AdaSDCA & NonUnifSDCA & AdaSGD & NonUnifSGD \\
         \hline
-        \#epochs & 8 & 28 & 195 & 500 \\         
+        \#epochs & \textbf{8} & 28 & 195 & 500 \\         
         \hline
     \end{tabular}    
 \end{table}
@@ -253,7 +257,6 @@ The \textbf{primal sub-optimality} of algorithm is defined as $f(\wv(\alphav)) -
 
 \begin{frame}{Summary}
 \begin{itemize}
-	\item $\lambda=0.001$ for both \texttt{rcv1} and \texttt{astro-ph}.
 	\item Conservative Update works better on AdaSGD  while Aggressive Update works better on AdaSDCA.
 	\item AdaSDCA (adaptive algorithm with duality gap) performs better than AdaSDCAS (adaptive algorithm with subgradient).
 	\item AdaSDCA has the best performance among all the adaptive algorithms (AdaSDCA, AdaSGD, AdaSVRG, AdaGrad and AdaSDCA+) and AdaSGD is the second best.
