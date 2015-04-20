@@ -22,14 +22,14 @@ Here, $\ell(.,y_i):\R\rightarrow\R$ is a loss function and $r(.)$ takes the role
 \begin{block}{Partial Objective Function}
 $f(\wv, i) = \ell(\langle \xv_i, \wv\rangle, y_i) + \lambda r(\wv).$
 \end{block}
-
 \begin{itemize}
 \item $\xv_i$: feature vector of sample $i$
 \item $y_i$: label of sample $i$
 \item $\wv$: solution of objective function
 \item $\eta$: stepsize for updating $\wv$
-\item $\chiv_i$: subgradient of $f(\wv, i)$
+\item {\color{red}$\chiv_i$: subgradient of $f(\wv, i)$}
 \end{itemize}
+Assume $f$, $\ell$ and $r$ are convex.
 \end{frame}
 
 \section{Non-Uniform Sampling}
@@ -38,7 +38,7 @@ $f(\wv, i) = \ell(\langle \xv_i, \wv\rangle, y_i) + \lambda r(\wv).$
 \end{frame}
 
 \begin{frame}{Non-Uniform}
-Define $p_i$ as the probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$. We use $\gv_i$ (the weighted subgradient with $\gv_i = \frac{\chiv_i}{n p_i}$).
+Define $p_i$ as the probability that sample $i$ will be selected with $\sum_{j=1}^n p_j=1$. We define {\color{red} $\gv_i$ as the weighted subgradient with $\gv_i = \frac{\chiv_i}{n p_i}$.}
 \[
 \E[\gv(\wv)] = \sum_{i=1}^n \frac{\chiv_i}{n} = \nabla f(\wv)
 \]
@@ -103,9 +103,9 @@ Define $W := \max_{i,t}\{\E[\|\chiv_{i}^t(\wv^{t})\|^2]\}$ ($i = 1\dots n$, $t=1
 Assume that $\max_{t}\{\|\chiv_{i_t}^t(\wv^t)\|^2\} \le G$ or $\E[\|\chiv_{i_t}^t(\wv^t)\|^2] \le W$ for all $t$ and $p_i > \epsilon$ for all $i=\{1\dots, n\}$,
     \begin{align*}
         \E\big[f\!\left(\frac1T\sum_{t=1}^T \wv^{t} \right)\big]- f(\wv^*) \le \frac{1}{2\lambda T} \sum_{t=1}^T \frac{G}{\epsilon nt}
-\le \frac{G(\ln T+1)}{2\lambda \epsilon nT} \text{or}\\ 
+\le \frac{G}{2\lambda \epsilon n} \cdot \frac{\ln T+1}{T} \text{or}\\ 
         \E\big[f\!\left(\frac1T\sum_{t=1}^T \wv^{t} \right)\big]- f(\wv^*)  \le \frac{1}{2\lambda T}\sum_{t=1}^T \frac{W}{n^2\epsilon^2 t}
-\le \frac{W(\ln T+1)}{2\lambda Tn^2\epsilon^2}
+\le \frac{W}{2\lambda n^2\epsilon^2} \cdot \frac{\ln T+1}{T}
     \end{align*}
 \end{corollary}
 \end{frame}

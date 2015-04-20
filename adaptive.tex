@@ -45,10 +45,10 @@ The above inequality holds when
 	Set $p_j \leftarrow \frac{\tilde{c}_j}{\sum_{k=1}^n \tilde{c}_k}$;
     }
 \end{algorithm} 
-For all $i\in\{1,\dots,n\}$, $\tilde{c}_i = \max\{1, c_i\}$.
+For all $i\in\{1,\dots,n\}$, $\tilde{c}_i := \max\{1, c_i\}$.
 \end{frame}
 
-\begin{frame}{AdaSVRG}
+\begin{frame}{AdaSVRG (variant of AdaSGD)}
 We add a $\tilde{\wv}$ (which denotes the $\wv$ of last epoch) for a new update equation. Therefore, we get
 
 \begin{equation*}\label{eq:vr_w_update}
